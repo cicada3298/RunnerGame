@@ -17,6 +17,8 @@ export class Sitting extends State {
         this.player = player;
     }
     enter(){  //defines the entry of the hero in the state
+        this.player.frameX = 0;
+        this.player.maxFrame = 4;
         this.player.frameY = 5;
     }
     handleInput(input){  //different inputs when hero is in the state
@@ -34,7 +36,9 @@ export class Running extends State {
         this.player = player;
     }
     enter(){  //defines the entry of the hero in the state
+        this.player.frameX = 0;
         this.player.frameY = 3;
+        this.player.maxFrame = 8;
     }
     handleInput(input){  //different inputs when hero is in the state
         if(input.includes('ArrowDown')){
@@ -52,6 +56,8 @@ export class Jumping extends State {
     }
     enter(){  //defines the entry of the hero in the state
         if(this.player.onGround())this.player.vy -= 28;
+        this.player.frameX = 0;
+        this.player.maxFrame = 6;
         this.player.frameY = 1;
     }
     handleInput(input){  //different inputs when hero is in the state
@@ -67,6 +73,8 @@ export class Falling extends State {
         this.player = player;
     }
     enter(){  //defines the entry of the hero in the state
+        this.player.frameX = 0;
+        this.player.maxFrame = 6;
         this.player.frameY = 2;
     }
     handleInput(input){  //different inputs when hero is in the state
