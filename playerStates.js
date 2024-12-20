@@ -22,6 +22,8 @@ export class Sitting extends State {
     handleInput(input){  //different inputs when hero is in the state
         if(input.includes('ArrowLeft') || input.includes('ArrowRight')){
             this.player.setState(states.RUNNING);
+        }else if(input.includes('ArrowUp')){
+            this.player.setState(states.JUMPING);
         }
     }
 }
@@ -49,12 +51,27 @@ export class Jumping extends State {
         this.player = player;
     }
     enter(){  //defines the entry of the hero in the state
-        if(this.player.onGround())this.player.vy -= 30;
+        if(this.player.onGround())this.player.vy -= 28;
         this.player.frameY = 1;
     }
     handleInput(input){  //different inputs when hero is in the state
         if(this.player.vy > this.player.weight){
             this.player.setState(states.FALLING);
+        }
+    }
+}
+
+export class Falling extends State {
+    constructor(player){
+        super("FALLING");
+        this.player = player;
+    }
+    enter(){  //defines the entry of the hero in the state
+        this.player.frameY = 2;
+    }
+    handleInput(input){  //different inputs when hero is in the state
+        if(this.player.onGround()){
+            this.player.setState(states.RUNNING);
         }
     }
 }
