@@ -6,7 +6,7 @@ export class Player{
         this.height = 91.3;
         this.width = 100;
         this.x = 0;
-        this.y = this.game.height - this.height;
+        this.y = this.game.height - this.height - this.game.groundMargin;
         this.vy = 0;
         this.weight = 1;
         this.image = document.getElementById('player');
@@ -52,10 +52,11 @@ export class Player{
         //sw -> source width sh -> height, these four select the frame from source image
     }
     onGround(){
-        return this.y >= this.game.height - this.height;
+        return this.y >= this.game.height - this.height - this.game.groundMargin;
     }
-    setState(state){
+    setState(state, speed){
         this.currentState = this.states[state];
+        this.game.speed = this.game.maxSpeed*speed;
         this.currentState.enter();
     }
 }
