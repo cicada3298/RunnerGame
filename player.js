@@ -23,6 +23,7 @@ export class Player{
         this.currentState.enter();
     }
     update(input, deltaTime){
+        this.checkCollision();
         this.currentState.handleInput(input);
         this.x += this.speed;
         if(input.includes('ArrowRight')) this.speed = this.maxSpeed;
@@ -45,6 +46,7 @@ export class Player{
         }
     }
     draw(context){
+        if(this.game.debug)context.strokeRect(this.x, this.y, this.width, this.height);
         context.drawImage(this.image, this.frameX*this.width , this.frameY*this.height , this.width, this.height, this.x, this.y, this.width, this.height);
         //context.drawImage(this.image, sx, sy, sw, sh, this.x, this.y, this.width, this.height);
         //drawimage is used to draw an image from a source to a destination in a web page
@@ -58,5 +60,18 @@ export class Player{
         this.currentState = this.states[state];
         this.game.speed = this.game.maxSpeed*speed;
         this.currentState.enter();
+    }
+    checkCollision(){
+        this.game.enemies.forEach(enemy => {
+            if(
+                enemy.x < this.x + this.width &&
+                enemy.x + enemy.width > this.x &&
+                enemy.y < this.y + this.height &&
+                enemy.y + enemy.height > this.y
+            ){
+                enemy.markedForDeletion = true;
+                this.game.score++;
+            }
+        })
     }
 }
